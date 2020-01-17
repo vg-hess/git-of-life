@@ -58,14 +58,7 @@ void Field::setPoint(int i, int j, bool state) {
 void Field::nextGeneration() {
 	for(int i = 1; i <= MAXSIZE; i++) {
 		for(int j = 1; j <= MAXSIZE; j++) {
-			  int t = mCell[mCurrent][i - 1][j - 1]
-			  + mCell[mCurrent][i - 1][j]
-			  + mCell[mCurrent][i - 1][j + 1]
-			  + mCell[mCurrent][i][j - 1]
-			  + mCell[mCurrent][i][j + 1]
-			  + mCell[mCurrent][i + 1][j - 1]
-			  + mCell[mCurrent][i + 1][j]
-			  + mCell[mCurrent][i + 1][j + 1];
+			  int t = countNeighbours(i, j);
 
 			  mCell[!mCurrent][i][j] = (t == 3 || (t == 2 && mCell[mCurrent][i][j]));
 		}
@@ -283,3 +276,16 @@ bool& Field::operator()(int x, int y) {
 const bool& Field::operator()(const int x, const int y) const {
 	return mCell[mCurrent][x][y];
 }
+
+auto Field::countNeighbours(int i, int j) -> int
+{
+	return mCell[mCurrent][i - 1][j - 1]
+			  + mCell[mCurrent][i - 1][j]
+			  + mCell[mCurrent][i - 1][j + 1]
+			  + mCell[mCurrent][i][j - 1]
+			  + mCell[mCurrent][i][j + 1]
+			  + mCell[mCurrent][i + 1][j - 1]
+			  + mCell[mCurrent][i + 1][j]
+			  + mCell[mCurrent][i + 1][j + 1];
+}
+

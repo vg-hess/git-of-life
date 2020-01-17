@@ -52,6 +52,8 @@ class Field : public QWidget {
 		int index2pos(int x);
 		int mSpeed;                                      ///< Holds the current speed setting.
 		QTimer* mGenTimer;                               ///< Pointer to a QTimer used for updating the screen.
+		
+		auto countNeighbours(int i, int j) -> int;
 };
     
 #endif
