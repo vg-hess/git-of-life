@@ -10,13 +10,4 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5DBus REQUIRED)
 
-add_executable(game_of_life
-	board.cpp board.h
-	field.cpp field.h
-	window.cpp window.h
-	main.cpp
-)
-target_link_libraries(game_of_life
-	Qt5::Widgets
-	Qt5::DBus
-)
+add_subdirectory(src)
