@@ -15,6 +15,8 @@
 #include <QApplication>
 #include <QtWidgets>
 
+enum {MAXSIZE = 50, MINSIZE = 10, BORDER = 5};  ///< Enum for sizes
+
 class Field : public QWidget {
 	Q_OBJECT
 
@@ -41,7 +43,6 @@ class Field : public QWidget {
 		void mouseHandle(const QPoint& pos, bool state);
 
 	private:
-		enum {MAXSIZE = 50, MINSIZE = 10, BORDER = 5};  ///< Enum for sizes
 		enum {SLOW = 350, NORMAL = 150, FAST = 50};     ///< Enum for speeds
 
 		std::array<std::array<std::array<bool, MAXSIZE + 2>, MAXSIZE + 2>, 2> mCell;
@@ -53,7 +54,8 @@ class Field : public QWidget {
 		int mSpeed;                                      ///< Holds the current speed setting.
 		QTimer* mGenTimer;                               ///< Pointer to a QTimer used for updating the screen.
 		
-		auto countNeighbours(int i, int j) -> int;
 };
+
+auto countNeighbours(std::array<std::array<bool, MAXSIZE + 2>, MAXSIZE + 2> const current, int i, int j) -> int;
     
 #endif
