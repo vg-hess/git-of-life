@@ -67,7 +67,7 @@ void Field::nextGeneration() {
 			  + mCell[mCurrent][i + 1][j]
 			  + mCell[mCurrent][i + 1][j + 1];
 
-			  mCell[!mCurrent][i][j] = (t == 3 || (t == 2 && mCell[mCurrent][i][j]));
+			  mCell[!mCurrent][i][j] = isAlive(mCell[mCurrent][i][j], t);
 		}
 	}
 	mCurrent = !mCurrent;
@@ -282,4 +282,9 @@ bool& Field::operator()(int x, int y) {
 //////////////////////////////////////////////////////////////////////
 const bool& Field::operator()(const int x, const int y) const {
 	return mCell[mCurrent][x][y];
+}
+
+auto isAlive(bool currentCell, int neighbourCount) -> bool
+{
+	return (neighbourCount == 3 || (neighbourCount == 2 && currentCell));
 }
