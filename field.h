@@ -15,6 +15,8 @@
 #include <QApplication>
 #include <QtWidgets>
 
+#include "game_of_life.h"
+
 class Field : public QWidget {
 	Q_OBJECT
 
@@ -53,7 +55,5 @@ class Field : public QWidget {
 		int mSpeed;                                      ///< Holds the current speed setting.
 		QTimer* mGenTimer;                               ///< Pointer to a QTimer used for updating the screen.
 };
-
-auto isAlive(bool currentCell, int neighbourCount) -> bool;
 
 #endif
