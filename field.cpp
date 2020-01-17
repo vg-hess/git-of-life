@@ -16,8 +16,11 @@ Field::Field(QWidget* parent) : QWidget(parent) {
 	mSCALE = 10;
 	mMaxI = MAXSIZE;
 	mMaxJ = MAXSIZE;
-	mCurrent = 0;
 	mSpeed = NORMAL;
+	
+	generation current;
+	generation next;
+	mCell = std::make_pair(current, next);
 
 	setMinimumSize(MINSIZE * mSCALE + 2 * BORDER, MINSIZE * mSCALE + 2 * BORDER);
 	setMaximumSize(MAXSIZE * mSCALE + 2 * BORDER, MAXSIZE * mSCALE + 2 * BORDER);
@@ -44,7 +47,7 @@ void Field::setPoint(int i, int j, bool state) {
 	if(i < 1 || i > mMaxI || j < 1 || j > mMaxJ) {
 		return;
 	}
-	mCell[mCurrent][i][j] = state;
+	mCell.first[i][j] = state;
 	repaint(index2pos(i), index2pos(j), mSCALE, mSCALE);
 }
 
@@ -58,19 +61,19 @@ void Field::setPoint(int i, int j, bool state) {
 void Field::nextGeneration() {
 	for(int i = 1; i <= MAXSIZE; i++) {
 		for(int j = 1; j <= MAXSIZE; j++) {
-			  int t = mCell[mCurrent][i - 1][j - 1]
-			  + mCell[mCurrent][i - 1][j]
-			  + mCell[mCurrent][i - 1][j + 1]
-			  + mCell[mCurrent][i][j - 1]
-			  + mCell[mCurrent][i][j + 1]
-			  + mCell[mCurrent][i + 1][j - 1]
-			  + mCell[mCurrent][i + 1][j]
-			  + mCell[mCurrent][i + 1][j + 1];
+			  int t = mCell.first[i - 1][j - 1]
+			  + mCell.first[i - 1][j]
+			  + mCell.first[i - 1][j + 1]
+			  + mCell.first[i][j - 1]
+			  + mCell.first[i][j + 1]
+			  + mCell.first[i + 1][j - 1]
+			  + mCell.first[i + 1][j]
+			  + mCell.first[i + 1][j + 1];
 
-			  mCell[!mCurrent][i][j] = (t == 3 || (t == 2 && mCell[mCurrent][i][j]));
+			  mCell.second[i][j] = (t == 3 || (t == 2 && mCell.first[i][j]));
 		}
 	}
-	mCurrent = !mCurrent;
+	std::swap(mCell.first, mCell.second);
 	repaint();
 }
 
@@ -137,13 +140,11 @@ void Field::setSlow() {
 /// @post All the boolean cells are set to false.
 //////////////////////////////////////////////////////////////////////
 void Field::clear() {
-	mCurrent = 0;
-	for(int t = 0; t < 2; t++) {
-		for(int i = 0; i < MAXSIZE + 2; i++) {
-			for(int j = 0; j < MAXSIZE + 2; j++) {
-				mCell[t][i][j] = false;
-			}
-		}
+	for (auto && line : mCell.first) {
+		line.fill(false);
+	}
+	for (auto && line : mCell.second) {
+		line.fill(false);
 	}
 	repaint();
 }
@@ -169,7 +170,7 @@ void Field::paintEvent(QPaintEvent* e) {
 
 	for(int i = starti; i <= stopi; i++) {
 		for(int j = startj; j <= stopj; j++) {
-			if(mCell[mCurrent][i][j]) {
+			if(mCell.first[i][j]) {
 				paint.setBrush(Qt::green);
 			} else {
 				paint.setBrush(Qt::black);
@@ -269,7 +270,7 @@ int Field::index2pos(int x) {
 /// @param y The y-coordinate
 //////////////////////////////////////////////////////////////////////
 bool& Field::operator()(int x, int y) {
-	return mCell[mCurrent][x][y];
+	return mCell.first[x][y];
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -281,5 +282,5 @@ bool& Field::operator()(int x, int y) {
 /// @param y The y-coordinate
 //////////////////////////////////////////////////////////////////////
 const bool& Field::operator()(const int x, const int y) const {
-	return mCell[mCurrent][x][y];
+	return mCell.first[x][y];
 }

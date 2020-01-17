@@ -47,8 +47,7 @@ class Field : public QWidget {
 
 		using generation = std::array<std::array<bool, MAXSIZE + 2>, MAXSIZE + 2>;
 
-		std::array<generation, 2> mCell;
-		int mCurrent;                                    ///< Holds which set of cells is the current generation.
+		std::pair<generation, generation> mCell;		/// first is the displayed current generation, second holds the next generation
 		int mMaxI, mMaxJ;                                 ///< Holds the maximum iteration values.
 		int mSCALE;                                      ///< The current scaling size.
 		int pos2index(int x);
