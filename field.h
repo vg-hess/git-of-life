@@ -15,6 +15,7 @@
 #include <QApplication>
 #include <QtWidgets>
 
+
 class Field : public QWidget {
 	Q_OBJECT
 
@@ -44,7 +45,9 @@ class Field : public QWidget {
 		enum {MAXSIZE = 50, MINSIZE = 10, BORDER = 5};  ///< Enum for sizes
 		enum {SLOW = 350, NORMAL = 150, FAST = 50};     ///< Enum for speeds
 
-		std::array<std::array<std::array<bool, MAXSIZE + 2>, MAXSIZE + 2>, 2> mCell;
+		using generation = std::array<std::array<bool, MAXSIZE + 2>, MAXSIZE + 2>;
+
+		std::array<generation, 2> mCell;
 		int mCurrent;                                    ///< Holds which set of cells is the current generation.
 		int mMaxI, mMaxJ;                                 ///< Holds the maximum iteration values.
 		int mSCALE;                                      ///< The current scaling size.
