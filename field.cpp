@@ -58,7 +58,7 @@ void Field::setPoint(int i, int j, bool state) {
 void Field::nextGeneration() {
 	for(int i = 1; i <= MAXSIZE; i++) {
 		for(int j = 1; j <= MAXSIZE; j++) {
-			  int t = countNeighbours(mCell[mCurrent], i, j);
+			  int t = gol::countNeighbours(mCell[mCurrent], i, j);
 
 			  mCell[!mCurrent][i][j] = (t == 3 || (t == 2 && mCell[mCurrent][i][j]));
 		}

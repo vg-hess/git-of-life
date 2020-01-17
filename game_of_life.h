@@ -6,6 +6,10 @@
 
 enum {MAXSIZE = 50, MINSIZE = 10, BORDER = 5};  ///< Enum for sizes
 
+namespace gol {
+
 auto countNeighbours(std::array<std::array<bool, MAXSIZE + 2>, MAXSIZE + 2> const current, int i, int j) -> int;
+
+}
 
 #endif
