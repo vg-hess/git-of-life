@@ -15,7 +15,7 @@
 #include <QApplication>
 #include <QtWidgets>
 
-enum {MAXSIZE = 50, MINSIZE = 10, BORDER = 5};  ///< Enum for sizes
+#include "game_of_life.h"
 
 class Field : public QWidget {
 	Q_OBJECT
@@ -55,7 +55,5 @@ class Field : public QWidget {
 		QTimer* mGenTimer;                               ///< Pointer to a QTimer used for updating the screen.
 		
 };
-
-auto countNeighbours(std::array<std::array<bool, MAXSIZE + 2>, MAXSIZE + 2> const current, int i, int j) -> int;
     
 #endif
