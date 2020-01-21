@@ -140,11 +140,10 @@ void Field::setSlow() {
 /// @post All the boolean cells are set to false.
 //////////////////////////////////////////////////////////////////////
 void Field::clear() {
-	for (auto && line : mCell.first) {
-		line.fill(false);
-	}
-	for (auto && line : mCell.second) {
-		line.fill(false);
+	for (auto generation : {&mCell.first, &mCell.second}) {
+		for (auto & line : *generation) {
+			line.fill(false);
+		}
 	}
 	repaint();
 }
