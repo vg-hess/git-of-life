@@ -12,7 +12,7 @@ pool:
 container: ubuntu:16.04
 
 steps:
-- script: 'sudo apt-get install qt5-default'
+- script: 'apt-get install qt5-default'
   displayName: 'Install Qt5'
 
 - script: 'cd build && cmake ..'
