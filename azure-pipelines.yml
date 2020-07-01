@@ -10,9 +10,8 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- script: 
-    cd build
-    cmake ..
-    make
-  displayName: 'Build git-of-life'
+- script: 'cd build && cmake ..'
+  displayName: 'Configure git-of-life'
 
+- script: 'make'
+  displayName: 'Build git-of-life'
