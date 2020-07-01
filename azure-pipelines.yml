@@ -7,9 +7,14 @@ trigger:
 - master
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'ubuntu-16.04'
+
+container: ubuntu:16.04
 
 steps:
+- script: 'sudo apt-get install qt5-default'
+  displayName: 'Install Qt5'
+
 - script: 'cd build && cmake ..'
   displayName: 'Configure git-of-life'
 
